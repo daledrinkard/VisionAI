@@ -56,4 +56,6 @@
 #define REQUIRE_OSPI_MEMORY_COPY_TO_SDRAM
 #endif
 
+// #######################  CONSOLE ###########################
+#define CONSOLE_SELECTION (1)  // (1) = console (0) = printf
 #endif /* APPLICATION_CONFIG_H__ */

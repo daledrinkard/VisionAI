@@ -259,9 +259,9 @@ const spi_flash_instance_t g_ospi_b =
 #if defined OSPI_B_CFG_DOTF_PROTECTED_MODE_SUPPORT_ENABLE
 rsip_instance_t const * const gp_rsip_instance = &RA_NOT_DEFINED;
 #endif
-sci_b_uart_instance_ctrl_t g_console_output_uart_ctrl;
+sci_b_uart_instance_ctrl_t g_printf_uart_ctrl;
 
-sci_b_baud_setting_t g_console_output_uart_baud_setting =
+sci_b_baud_setting_t g_printf_uart_baud_setting =
         {
         /* Baud rate calculated with 1.725% error. */.baudrate_bits_b.abcse = 0,
           .baudrate_bits_b.abcs = 0, .baudrate_bits_b.bgdm = 1, .baudrate_bits_b.cks = 0, .baudrate_bits_b.brr = 15, .baudrate_bits_b.mddr =
@@ -269,13 +269,11 @@ sci_b_baud_setting_t g_console_output_uart_baud_setting =
           .baudrate_bits_b.brme = false };
 
 /** UART extended configuration for UARTonSCI HAL driver */
-const sci_b_uart_extended_cfg_t g_console_output_uart_cfg_extend =
-{ .clock = SCI_B_UART_CLOCK_INT,
-  .rx_edge_start = SCI_B_UART_START_BIT_FALLING_EDGE,
-  .noise_cancel = SCI_B_UART_NOISE_CANCELLATION_DISABLE,
-  .rx_fifo_trigger = SCI_B_UART_RX_FIFO_TRIGGER_MAX,
-  .p_baud_setting = &g_console_output_uart_baud_setting,
-  .flow_control = SCI_B_UART_FLOW_CONTROL_RTS,
+const sci_b_uart_extended_cfg_t g_printf_uart_cfg_extend =
+{ .clock = SCI_B_UART_CLOCK_INT, .rx_edge_start = SCI_B_UART_START_BIT_FALLING_EDGE, .noise_cancel =
+          SCI_B_UART_NOISE_CANCELLATION_DISABLE,
+  .rx_fifo_trigger = SCI_B_UART_RX_FIFO_TRIGGER_MAX, .p_baud_setting = &g_printf_uart_baud_setting, .flow_control =
+          SCI_B_UART_FLOW_CONTROL_RTS,
 #if 0xFF != 0xFF
                 .flow_control_pin       = BSP_IO_PORT_FF_PIN_0xFF,
                 #else
@@ -288,10 +286,10 @@ const sci_b_uart_extended_cfg_t g_console_output_uart_cfg_extend =
     .negation_time = 1, } };
 
 /** UART interface configuration */
-const uart_cfg_t g_console_output_uart_cfg =
+const uart_cfg_t g_printf_uart_cfg =
 { .channel = 8, .data_bits = UART_DATA_BITS_8, .parity = UART_PARITY_OFF, .stop_bits = UART_STOP_BITS_1, .p_callback =
-          console_output_uart_callback,
-  .p_context = NULL, .p_extend = &g_console_output_uart_cfg_extend,
+          printf_uart_callback,
+  .p_context = NULL, .p_extend = &g_printf_uart_cfg_extend,
 #define RA_NOT_DEFINED (1)
 #if (RA_NOT_DEFINED == RA_NOT_DEFINED)
   .p_transfer_tx = NULL,
@@ -329,8 +327,8 @@ const uart_cfg_t g_console_output_uart_cfg =
         };
 
 /* Instance structure to use this module. */
-const uart_instance_t g_console_output_uart =
-{ .p_ctrl = &g_console_output_uart_ctrl, .p_cfg = &g_console_output_uart_cfg, .p_api = &g_uart_on_sci_b };
+const uart_instance_t g_printf_uart =
+{ .p_ctrl = &g_printf_uart_ctrl, .p_cfg = &g_printf_uart_cfg, .p_api = &g_uart_on_sci_b };
 void g_hal_init(void)
 {
     g_common_init ();

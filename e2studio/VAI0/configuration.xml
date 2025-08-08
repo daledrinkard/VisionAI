@@ -504,7 +504,7 @@
     <module id="module.middleware.rm_freertos_port.0"/>
     <module id="module.freertos.heap.4.794258804"/>
     <module id="module.driver.uart_on_sci_b_uart.1545713378">
-      <property id="module.driver.uart.name" value="g_console_output_uart"/>
+      <property id="module.driver.uart.name" value="g_printf_uart"/>
       <property id="module.driver.uart.channel" value="8"/>
       <property id="module.driver.uart.data_bits" value="module.driver.uart.data_bits.data_bits_8"/>
       <property id="module.driver.uart.parity" value="module.driver.uart.parity.parity_off"/>
@@ -523,7 +523,7 @@
       <property id="module.driver.uart.rs485.de_polarity" value="module.driver.uart.rs485.de_polarity.high"/>
       <property id="module.driver.uart.rs485.de_assertion_time" value="1"/>
       <property id="module.driver.uart.rs485.de_negation_time" value="1"/>
-      <property id="module.driver.uart.callback" value="console_output_uart_callback"/>
+      <property id="module.driver.uart.callback" value="printf_uart_callback"/>
       <property id="module.driver.uart.rxi_ipl" value="board.icu.common.irq.priority13"/>
       <property id="module.driver.uart.txi_ipl" value="board.icu.common.irq.priority13"/>
       <property id="module.driver.uart.tei_ipl" value="board.icu.common.irq.priority13"/>
@@ -2268,6 +2268,8 @@
       <configSetting altId="p010.irq.irq14" configurationId="p010"/>
       <configSetting altId="p010.gpio_irq.gpio_irq_enabled" configurationId="p010.gpio_irq"/>
       <configSetting altId="p010.gpio_mode.gpio_mode_irq" configurationId="p010.gpio_mode"/>
+      <configSetting altId="p011.output.low" configurationId="p011"/>
+      <configSetting altId="p011.gpio_mode.gpio_mode_out.low" configurationId="p011.gpio_mode"/>
       <configSetting altId="p100.ospi0.om_0_sio0" configurationId="p100"/>
       <configSetting altId="p100.gpio_speed.gpio_speed_h" configurationId="p100.gpio_drivecapacity"/>
       <configSetting altId="p100.gpio_mode.gpio_mode_peripheral" configurationId="p100.gpio_mode"/>
@@ -2325,6 +2327,8 @@
       <configSetting altId="p302.gpio_mode.gpio_mode_peripheral" configurationId="p302.gpio_mode"/>
       <configSetting altId="p303.output.low" configurationId="p303"/>
       <configSetting altId="p303.gpio_mode.gpio_mode_out.low" configurationId="p303.gpio_mode"/>
+      <configSetting altId="p312.output.low" configurationId="p312"/>
+      <configSetting altId="p312.gpio_mode.gpio_mode_out.low" configurationId="p312.gpio_mode"/>
       <configSetting altId="p411.mipi.dsi_te" configurationId="p411"/>
       <configSetting altId="p411.gpio_mode.gpio_mode_peripheral" configurationId="p411.gpio_mode"/>
       <configSetting altId="p501.gpt12.gtioc12a" configurationId="p501"/>
@@ -2437,6 +2441,10 @@
       <configSetting altId="p808.ospi0.om_0_sclk" configurationId="p808"/>
       <configSetting altId="p808.gpio_speed.gpio_speed_hh" configurationId="p808.gpio_drivecapacity"/>
       <configSetting altId="p808.gpio_mode.gpio_mode_peripheral" configurationId="p808.gpio_mode"/>
+      <configSetting altId="p810.output.low" configurationId="p810"/>
+      <configSetting altId="p810.gpio_mode.gpio_mode_out.low" configurationId="p810.gpio_mode"/>
+      <configSetting altId="p811.output.low" configurationId="p811"/>
+      <configSetting altId="p811.gpio_mode.gpio_mode_out.low" configurationId="p811.gpio_mode"/>
       <configSetting altId="p813.sdram.sdcs" configurationId="p813"/>
       <configSetting altId="p813.gpio_speed.gpio_speed_h" configurationId="p813.gpio_drivecapacity"/>
       <configSetting altId="p813.gpio_mode.gpio_mode_peripheral" configurationId="p813.gpio_mode"/>

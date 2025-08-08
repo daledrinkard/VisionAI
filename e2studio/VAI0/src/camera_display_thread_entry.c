@@ -22,16 +22,26 @@
 #include "camera_utils.h"
 #include "display_layer.h"
 
-#include "console_output.h"
+//@@#include "console_output.h"
 
 #include "common_util.h"
 
 #include "time_counter.h"
+#if (CONSOLE_SELECTION == 1)
+#include "console/console_port.h"
+#include "commands/commands.h"
+#endif
+#include "POP/pop.h"
+
+char CBX[128];
 
 /***************************************************************************************************************************
  * Macro definitions
  ***************************************************************************************************************************/
 #define DISPLAY_THREAD_YIELD    (20U)
+
+#define SYSTEM_FLAG_DISPLAY     (0x00000001)
+#define SYSTEM_FLAG_PANEL_DIRTY (0x00000004)
 
 /***************************************************************************************************************************
  * Typedef definitions
@@ -53,10 +63,70 @@ extern uint32_t model_buffer_int8_size;
 /***************************************************************************************************************************
  * Private global variables and functions
  ***************************************************************************************************************************/
+static void compute_fps(void);
 
 static volatile uint32_t time_counter_start = 0;
 static volatile uint32_t time_counter_end = 0;
+static volatile uint32_t SYSTEM_flags = 0;
 
+const char* Pane1 =
+"+---------------------------------------------------------+\n\
+|Processing time:                                         |\n\
+|  Camera image capture vsync period :      ms,      fps  |\n\
+|  Camera post processing time       :      ms,      fps  |\n\
+|  AI inference pre processing time  :      ms,      fps  |\n\
+|  AI inference time                 :      ms,      fps  |\n\
+|  LCD display vsync period          :      ms,      fps  |\n\
++---------------------------------------------------------+\n";
+
+
+/*
+
+sprintf (sprintf_buffer, "  Camera image capture vsync period : %4d ms, %4d fps\r\n",
+        application_processing_time.camera_image_capture_time_ms, TimeCounter_ConvertFromMsToFps(application_processing_time.camera_image_capture_time_ms));
+print_to_console(sprintf_buffer);
+sprintf (sprintf_buffer, "  Camera post processing time       : %4d ms, %4d fps\r\n",
+        application_processing_time.camera_post_processing_time_ms, TimeCounter_ConvertFromMsToFps(application_processing_time.camera_post_processing_time_ms));
+print_to_console(sprintf_buffer);
+sprintf (sprintf_buffer, "  AI inference pre processing time  : %4d ms, %4d fps\r\n",
+        application_processing_time.ai_inference_pre_processing_time_ms, TimeCounter_ConvertFromMsToFps(application_processing_time.ai_inference_pre_processing_time_ms));
+print_to_console(sprintf_buffer);
+sprintf (sprintf_buffer, "  AI inference time                 : %4d ms, %4d fps\r\n",
+        application_processing_time.ai_inference_time_ms, TimeCounter_ConvertFromMsToFps(application_processing_time.ai_inference_time_ms));
+print_to_console(sprintf_buffer);
+sprintf (sprintf_buffer, "  LCD display vsync period          : %4d ms, %4d fps\r\n",
+        application_processing_time.lcd_display_update_refresh_ms, TimeCounter_ConvertFromMsToFps(application_processing_time.lcd_display_update_refresh_ms));
+
+*/
+
+
+
+
+uint32_t FPS[5]; //@@ugly tempsss...
+
+
+
+static console_data_t ConsoleData1[] =
+{
+    {3,39,4,CONSOLE_DATA_INT,(void*) &application_processing_time.camera_image_capture_time_ms},
+    {3,48,4,CONSOLE_DATA_INT,&FPS[0]},
+    {4,39,4,CONSOLE_DATA_INT,&application_processing_time.camera_post_processing_time_ms},
+    {4,48,4,CONSOLE_DATA_INT,&FPS[1]},
+    {5,39,4,CONSOLE_DATA_INT,&application_processing_time.ai_inference_pre_processing_time_ms},
+    {5,48,4,CONSOLE_DATA_INT,&FPS[2]},
+    {6,39,4,CONSOLE_DATA_INT,&application_processing_time.ai_inference_time_ms},
+    {6,48,4,CONSOLE_DATA_INT,&FPS[3]},
+    {7,39,4,CONSOLE_DATA_INT,&application_processing_time.lcd_display_update_refresh_ms},
+    {7,48,4,CONSOLE_DATA_INT,&FPS[4]},
+    {0,0,0,0,0}
+};
+static console_pane_t Console_Pane1 =
+{0,0,&ConsoleData1};
+#if (CONSOLE_SELECTION == 1)
+static volatile console_t *Console;
+static console_cb_t Console_CB;
+static void Console_callback(console_event_t event, void *ctx);
+#endif
 FSP_CPP_HEADER
 void console_output(bool ai_result_new);
 #if (ENABLE_AI_INFERENCE_RESULT_CONSOLE_OUTPUT == 1)
@@ -81,12 +151,42 @@ void camera_display_thread_entry(void *pvParameters)
     FSP_PARAMETER_NOT_USED(pvParameters);
 
     // Initialize modules for console output
-    fsp_status = console_output_init();
-    if (FSP_SUCCESS != fsp_status)
+#if (CONSOLE_SELECTION == 1)
+    SYSTEM_flags = 0xffffffff;
+    /* Initialize the console */
+    Console = RA_console_init("CON1",&P1[0] ,&g_printf_uart,&Console_callback);
+    if (NULL == Console)
     {
         handle_error(VISION_AI_APP_ERR_CONSOLE_OPEN);
     }
-
+    /* initialize the commands */
+    P1_Open((console_t*) Console);
+    console_Print("Hello World\n");
+    strcpy(CBX,"echo \"Goodbye World\"\n");
+    console_Exec(CBX);
+    R_BSP_PinAccessEnable();
+    while(0)
+    {
+        POP0();
+        R_BSP_SoftwareDelay(10, BSP_DELAY_UNITS_MILLISECONDS);
+        DROP0();
+        R_BSP_SoftwareDelay(10, BSP_DELAY_UNITS_MILLISECONDS);
+        POP1();
+        R_BSP_SoftwareDelay(10, BSP_DELAY_UNITS_MILLISECONDS);
+        DROP1();
+        R_BSP_SoftwareDelay(10, BSP_DELAY_UNITS_MILLISECONDS);
+        POP2();
+        R_BSP_SoftwareDelay(10, BSP_DELAY_UNITS_MILLISECONDS);
+        DROP2();
+        R_BSP_SoftwareDelay(10, BSP_DELAY_UNITS_MILLISECONDS);
+        POP3();
+        R_BSP_SoftwareDelay(10, BSP_DELAY_UNITS_MILLISECONDS);
+        DROP3();
+        R_BSP_SoftwareDelay(10, BSP_DELAY_UNITS_MILLISECONDS);
+    }
+#else
+    printf("Hello World\n");
+#endif
     // Initialize external IRQ
     fsp_status = external_irq_configure();
     if (FSP_SUCCESS != fsp_status)
@@ -156,7 +256,7 @@ void camera_display_thread_entry(void *pvParameters)
 
     // Wait for all required hardware and software initialization complete
     xEventGroupWaitBits(g_ai_app_event, (HARDWARE_DISPLAY_INIT_DONE | HARDWARE_CAMERA_INIT_DONE | HARDWARE_ETHOSU_INIT_DONE | SOFTWARE_AI_INFERENCE_INIT_DONE), pdFALSE, pdTRUE, portMAX_DELAY);
-
+    console_Print("Hardware initialized\n");
 #if (ENABLE_CAMERA_INPUT == 1)
     // Start camera capture
     camera_capture_start();
@@ -166,13 +266,14 @@ void camera_display_thread_entry(void *pvParameters)
     {
 #if (ENABLE_CAMERA_INPUT == 1)
         // Wait for camera data input
-        xEventGroupWaitBits(g_ai_app_event, CAMERA_CAPTURE_COMPLETED, pdTRUE, pdTRUE, portMAX_DELAY);
 
+        xEventGroupWaitBits(g_ai_app_event, CAMERA_CAPTURE_COMPLETED, pdTRUE, pdTRUE, portMAX_DELAY);
+POP0();
         time_counter_start = TimeCounter_CurrentCountGet();
 
         // Post processing for camera image capture. After this process is completed, user app can take an image from camera_capture_image_rgb565[].
         camera_capture_post_process();
-
+POP1();
         time_counter_end = TimeCounter_CurrentCountGet();
         application_processing_time.camera_post_processing_time_ms = TimeCounter_CountValueConvertToMs(time_counter_start, time_counter_end);
 #endif
@@ -181,7 +282,7 @@ void camera_display_thread_entry(void *pvParameters)
         // Create an image for AI inference
         image_rgb565_to_int8(&camera_capture_image_rgb565[0], &model_buffer_int8[0],
                              CAMERA_CAPTURE_IMAGE_WIDTH, CAMERA_CAPTURE_IMAGE_HEIGHT, AI_INPUT_IMAGE_WIDTH, AI_INPUT_IMAGE_HEIGHT);
-
+POP2();
 #if (BSP_CFG_DCACHE_ENABLED == 1)
         // Clean cache data because this buffer will be accessed by NPU hardware in subsequent process
         SCB_CleanDCache_by_Addr((uint8_t *)&model_buffer_int8[0], (int32_t)model_buffer_int8_size);
@@ -192,7 +293,7 @@ void camera_display_thread_entry(void *pvParameters)
 
         // Set AI inference input image ready flag. AI inference thread may waiting this flag set.
         xEventGroupSetBits(g_ai_app_event, AI_INFERENCE_INPUT_IMAGE_READY);
-
+DROP0();
         // Make a change for immediate task switch
         vTaskDelay(1);
 
@@ -204,14 +305,22 @@ void camera_display_thread_entry(void *pvParameters)
         // Display camera image and AI inference result on display screen
         do_face_reconition_screen(ai_result_updated);
 #endif
-
+DROP1();
         // Output the result to Terminal Software
         console_output(ai_result_updated);
 
         vTaskDelay(DISPLAY_THREAD_YIELD);
+        DROP2();
     }
 }
-
+static void compute_fps(void)
+{
+    FPS[0] = TimeCounter_ConvertFromMsToFps(application_processing_time.camera_image_capture_time_ms);
+    FPS[1] = TimeCounter_ConvertFromMsToFps(application_processing_time.camera_post_processing_time_ms);
+    FPS[2] = TimeCounter_ConvertFromMsToFps(application_processing_time.ai_inference_pre_processing_time_ms);
+    FPS[3] = TimeCounter_ConvertFromMsToFps(application_processing_time.ai_inference_time_ms);
+    FPS[4] = TimeCounter_ConvertFromMsToFps(application_processing_time.lcd_display_update_refresh_ms);
+}
 /*********************************************************************************************************************
  *  AI inference output function
  *  @param      None
@@ -220,16 +329,26 @@ void camera_display_thread_entry(void *pvParameters)
 void console_output(bool ai_result_new)
 {
 #if (ENABLE_CONSOLE_OUTPUT_SCREEN_CLEAR == 1)
-    sprintf (sprintf_buffer, "%s%s", "\x1b[2J", "\x1b[H");
-    print_to_console(sprintf_buffer);
+    if (SYSTEM_flags & SYSTEM_FLAG_PANEL_DIRTY)
+    {
+    sprintf (sprintf_buffer, "%s%s", "\x1b[2J", "\x1b[H"); //@@ this clears the screen.
+    console_Print(sprintf_buffer);
+    SYSTEM_flags &= (uint32_t) ~SYSTEM_FLAG_PANEL_DIRTY;
+    console_Print(Pane1);
+    }
+    //print_to_console(sprintf_buffer);
+    compute_fps();
+    console_Print("\033[s");
+    console_UpdatePane(&Console_Pane1);
+    console_Print("\033[u");
 #endif
 
 #if (ENABLE_PROCESSING_TIME_RESULT_CONSOLE_OUTPUT == 1)
-        console_output_processing_time();
+   //     console_output_processing_time();
 #endif
 
 #if (ENABLE_AI_INFERENCE_RESULT_CONSOLE_OUTPUT == 1)
-        console_output_ai_inference_result(ai_result_new);
+  //      console_output_ai_inference_result(ai_result_new);
 #endif
 }
 
@@ -309,3 +428,17 @@ void console_output_processing_time(void)
     print_to_console(sprintf_buffer);
 }
 #endif
+
+volatile int yy;
+static void Console_callback(console_event_t event, void *ctx)
+{
+    // callback from console.
+    switch(event) {
+        case CONSOLE_NULL_EVENT:
+            break;
+        case CONSOLE_LF_EVENT:
+            yy++;
+            break;
+
+    }
+}

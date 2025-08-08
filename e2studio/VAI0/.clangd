@@ -1,1 +1,1 @@
-CompileFlags: {CompilationDatabase: MRAM_SRAM}
+CompileFlags: {CompilationDatabase: Debug}

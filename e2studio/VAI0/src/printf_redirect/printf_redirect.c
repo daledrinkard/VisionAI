@@ -39,9 +39,51 @@ static void process_rxchar(uint32_t ch)
 }
 
 
+int fputc(int ch, FILE *f)
+{
+    fsp_err_t err = FSP_SUCCESS;
+    uint8_t c;
+    c = (uint8_t) ch;
 
+    static unsigned char uart_open = 0;
 
-int _write(int file, char *ptr, int len)
+    if (0 == uart_open)
+    {
+#if PRINTF_USE_SCI_B
+        err = R_SCI_B_UART_Open(&g_printf_uart_ctrl, &g_printf_uart_cfg);
+#else
+        err = R_SCI_UART_Open(&g_printf_uart_ctrl, &g_printf_uart_cfg);
+
+#endif
+        if (FSP_SUCCESS == err)
+        {
+            uart_open = true;
+        }
+        else
+        {
+            __BKPT(0); //todo
+        }
+
+    }
+    flags &= (unsigned int)~SERIAL_TXDONE;
+#if PRINTF_USE_SCI_B
+    err = R_SCI_B_UART_Write(&g_printf_uart_ctrl, &c, (uint32_t)1);
+#else
+    err = R_SCI_UART_Write(&g_printf_uart_ctrl, (uint8_t *)ptr, (uint32_t)len);
+#endif
+    if (FSP_SUCCESS == err)
+    {
+        while(0x00 == (flags & SERIAL_TXDONE));
+    }
+    else
+    {
+        return -1;
+    }
+    return ch;
+
+}
+
+int __write(int file, char *ptr, int len)
 {
     fsp_err_t err = FSP_SUCCESS;
     FSP_PARAMETER_NOT_USED(file);

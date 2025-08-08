@@ -14,6 +14,8 @@
 #include "hal_data.h"
 #include "application_config.h"
 #include "ai_application_config.h"
+//@@#include "printf_redirect/printf_redirect.h"
+#include "console.h"
 
 #if defined(BOARD_RA8D1_EK)
 #define LED1_PIN (BSP_IO_PORT_06_PIN_00)
@@ -70,6 +72,12 @@
 #define AI_INFERENCE_RESULT_UPDATED     (1 << 14)
 #define DISPLAY_PAUSE                   (1 << 15)
 #define CAMERA_AUTO_FOCUS_EXECUTE       (1 << 16)
+
+/* APPLICATION operation flags */
+#define APP_ENABLE_CAMERA               (0x00000001)
+#define APP_ENABLE_DISPLAY              (0x00000002)
+#define APP_ENABLE_AI                   (0x00000004)
+
 
 #define APP_ERROR_TRAP(err)        if(err) { __asm("BKPT #0\n");} /* system execution breaks  */
 
@@ -147,6 +155,8 @@ typedef struct st_processing_time_info_t
 extern char sprintf_buffer[];
 extern processinf_time_info_t application_processing_time;
 extern st_ai_detection_point_t g_ai_detection[AI_MAX_DETECTION_NUM];
+//@@void printF(char*s);
+#define print_to_console(_a_) console_Print(_a_) //@@
 
 FSP_CPP_HEADER
 void handle_error (vision_ai_app_err_t err);

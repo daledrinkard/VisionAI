@@ -305,7 +305,7 @@ FSP Configuration
       P008 U11 GPIO USER_SW2 - IRQ12-DS "Input mode" - - "ACMPHS: IVREF0; ADC1: AN008; IRQ: IRQ12-DS" - IO - - 
       P009 P11 GPIO USER_SW1 - IRQ13-DS "Input mode" - - "ACMPHS: IVREF1; ADC1: AN009; IRQ: IRQ13-DS" - IO - - 
       P010 P10 - CAMERA_IRQ - None Disabled - - "ADC1: AN010; IRQ: IRQ14" "Enable when connected" IO - - 
-      P011 N10 - ARDUINO_D2_INT0 - - Disabled - - "ADC1: AN011; IRQ: IRQ16" "Enable when connected" None - - 
+      P011 N10 - ARDUINO_D2_INT0 L - Disabled - - "ADC1: AN011; IRQ: IRQ16" "Enable when connected" IO - - 
       P012 P9 GPIO PMOD2_INT - - "Input mode" - - "ADC0: AN012; IRQ: IRQ15" - None - - 
       P013 N9 GPIO I3C_SCL_PU - - "Output mode (Initial High)" - - "ADC1: AN013; IRQ: IRQ14" "Enable I3C_SEL_L to use" None - - 
       P014 T8 - ARDUINO_AN4 - - Disabled - - "ACMPHS: IVCMP0; ADC0: AN014; DAC120: DA0; IRQ: IRQ27" "Enable when connected" None - - 
@@ -350,7 +350,7 @@ FSP Configuration
       P309 A12 ESWM_RGMII1_RGMII1_TXC ETHERNET_TCLK - - "Peripheral mode" - - "CEU: VIO_D10; CMPOUT: VCOUT; ESWM_GMII/MII1: ET1_GTX_CLK; ESWM_RGMII1: RGMII1_TXC; GLCDC: LCD_DATA15; GPT8: GTCPPO8; IRQ: IRQ25-DS; SCI9: CTS9" "Reference SW4 /  E23 in manual" None - - 
       P310 E10 ESWM_RGMII1_RGMII1_TX_CTL ETHERNET_TCTL - - "Peripheral mode" - - "AGT1: AGTEE1; CEU: VIO_D9; ESWM_GMII/MII1: ET1_TX_EN; ESWM_RGMII1: RGMII1_TX_CTL; ESWM_RMII1: RMII1_TX_EN; GLCDC: LCD_DATA16; GPT7: GTCPPO7; IRQ: IRQ24-DS; SCI3: TXD3" "Reference SW4 /  E22 in manual" None - - 
       P311 B12 - - - - Disabled - - "AGT1: AGTOB1; CANFD0: CRX0; CEU: VIO_D8; ESWM_GMII/MII1: ET1_TX_CLK; GLCDC: LCD_DATA17; GPT: GTADSM1; GPT6: GTCPPO6; IRQ: IRQ23-DS; SCI3: DE3; SCI3: SCK3" - None - - 
-      P312 C13 - ARDUINO_D7 - - Disabled - - "AGT1: AGTOA1; CANFD0: CTX0; CEU: VIO_D7; ESWM_GMII/MII1: ET1_RX_ER; ESWM_RMII1: RMII1_RX_ER; GLCDC: LCD_DATA18; GPT: GTADSM0; GPT5: GTCPPO5; IRQ: IRQ22-DS; PDM2: PDMDAT2; SCI3: CTS_RTS3; SCI3: DE3" "Enable when connected" None - - 
+      P312 C13 - ARDUINO_D7 L - Disabled - - "AGT1: AGTOA1; CANFD0: CTX0; CEU: VIO_D7; ESWM_GMII/MII1: ET1_RX_ER; ESWM_RMII1: RMII1_RX_ER; GLCDC: LCD_DATA18; GPT: GTADSM0; GPT5: GTCPPO5; IRQ: IRQ22-DS; PDM2: PDMDAT2; SCI3: CTS_RTS3; SCI3: DE3" "Enable when connected" IO - - 
       P400 P17 I3C0_I3C_SCL0 I3C_SCL - - "Peripheral mode" - - "ADC1(Digital): ADTRG1; AGT1: AGTIO1; CEU: VIO_D0; GPT6: GTIOC6A; I3C0: I3C_SCL0; IRQ: IRQ0; SCI1: TXD1; SDHI1: SD1CLK; SSIE: AUDIO_CLK" - None - - 
       P401 N17 I3C0_I3C_SDA0 I3C_SDA - - "Peripheral mode" - - "CANFD0: CTX0; CEU: VIO_D1; GPT6: GTIOC6B; GPT_POEGA: GTETRGA; I3C0: I3C_SDA0; IRQ: IRQ5-DS; SCI1: RXD1; SDHI1: SD1CMD" - None - - 
       P402 L14 SSIE_AUDIO_CLK PMOD1_RST - - "Peripheral mode" - - "CAC: CACREF; CANFD0: CRX0; ESWM_GMII/MII: ET0_LINKSTA; ESWM_RGMII0: ET0_LINKSTA; ESWM_RMII0: ET0_LINKSTA; IRQ: IRQ4-DS; RTC: RTCIC0; SCI1: DE1; SCI1: SCK1; SDHI1: SD1DAT0; SSIE: AUDIO_CLK" "Enable when connected" None - - 
@@ -425,8 +425,8 @@ FSP Configuration
       P807 N11 GLCDC_LCD_TCON2 PARLCD_DE H None "Peripheral mode" - - "GLCDC: LCD_TCON2; GPT13: GTIOC13A; IRQ: IRQ11" "See SW4 in manual" IO - - 
       P808 U5 OSPI0_OM_0_SCLK OSPI_CLK_ARDUINO_MISO H None "Peripheral mode" - - "GPT13: GTIOC13B; IRQ: IRQ15; OSPI0: OM_0_SCLK; SCI7: RXD7" "See SW4 in manual" IO - - 
       P809 T5 - ARDUINO_D1TX_MIKROBUS_TX - - Disabled - - "IRQ: IRQ20; OSPI0: OM_0_SCLKN; SCI7: TXD7" "Enable when connected" None - - 
-      P810 M9 - ARDUINO_D4_MIKROBUS_PWM - - Disabled - - "GPT10: GTIOC10A; IRQ: IRQ21; PDM0: PDMCLK0; SCI7: DE7; SCI7: SCK7; SDHI1: SD1DAT2; ULPT0: ULPTOA0" "Enable when connected" None - - 
-      P811 N8 - ARDUINO_D3 - - Disabled - - "GPT10: GTIOC10B; IRQ: IRQ22; PDM1: PDMCLK1; SCI7: CTS7; SDHI1: SD1DAT3; ULPT0: ULPTOB0; USB FS: USB_ID" "Enable when connected" None - - 
+      P810 M9 - ARDUINO_D4_MIKROBUS_PWM L - Disabled - - "GPT10: GTIOC10A; IRQ: IRQ21; PDM0: PDMCLK0; SCI7: DE7; SCI7: SCK7; SDHI1: SD1DAT2; ULPT0: ULPTOA0" "Enable when connected" IO - - 
+      P811 N8 - ARDUINO_D3 L - Disabled - - "GPT10: GTIOC10B; IRQ: IRQ22; PDM1: PDMCLK1; SCI7: CTS7; SDHI1: SD1DAT3; ULPT0: ULPTOB0; USB FS: USB_ID" "Enable when connected" IO - - 
       P812 P8 PDM2_PDMCLK2 MIC_CLK - - "Peripheral mode" - - "ADC0: AN022; ADC1: AN022; GPT11: GTIOC11A; IRQ: IRQ23; PDM2: PDMCLK2; SCI7: CTS_RTS7; SCI7: DE7; SDHI1: SD1DAT4; USB FS: USB_EXICEN" - None - - 
       P813 B1 SDRAM_SDCS SDRAM_CS H None "Peripheral mode" - - "CEU: VIO_D13; GPT7: GTIOC7B; GPT_POEGA: GTETRGA; IRQ: IRQ15; PDM2: PDMCLK2; SCI7: DE7; SCI7: SCK7; SDRAM: SDCS" "See E50 in manual" O - - 
       P814 U16 "USB FS_USB_DP" USB_FS_DP - - "Peripheral mode" - - "CANFD0: CRX0; GPT8: GTIOC8B; IRQ: IRQ16; USB FS: USB_DP" - None - - 
@@ -595,7 +595,7 @@ FSP Configuration
       P008 U11 - USER_SW2 - None Disabled - - "ACMPHS: IVREF0; ADC1: AN008; IRQ: IRQ12-DS" - IO - - 
       P009 P11 - USER_SW1 - None Disabled - - "ACMPHS: IVREF1; ADC1: AN009; IRQ: IRQ13-DS" - IO - - 
       P010 P10 - CAMERA_IRQ - None Disabled - - "ADC1: AN010; IRQ: IRQ14" "Enable when connected" IO - - 
-      P011 N10 - ARDUINO_D2_INT0 - - Disabled - - "ADC1: AN011; IRQ: IRQ16" "Enable when connected" None - - 
+      P011 N10 - ARDUINO_D2_INT0 L - Disabled - - "ADC1: AN011; IRQ: IRQ16" "Enable when connected" IO - - 
       P012 P9 - PMOD2_INT - - Disabled - - "ADC0: AN012; IRQ: IRQ15" - None - - 
       P013 N9 - I3C_SCL_PU - - Disabled - - "ADC1: AN013; IRQ: IRQ14" "Enable I3C_SEL_L to use" None - - 
       P014 T8 - ARDUINO_AN4 - - Disabled - - "ACMPHS: IVCMP0; ADC0: AN014; DAC120: DA0; IRQ: IRQ27" "Enable when connected" None - - 
@@ -640,7 +640,7 @@ FSP Configuration
       P309 A12 - ETHERNET_TCLK - - Disabled - - "CEU: VIO_D10; CMPOUT: VCOUT; ESWM_GMII/MII1: ET1_GTX_CLK; ESWM_RGMII1: RGMII1_TXC; GLCDC: LCD_DATA15; GPT8: GTCPPO8; IRQ: IRQ25-DS; SCI9: CTS9" "Reference SW4 /  E23 in manual" None - - 
       P310 E10 - ETHERNET_TCTL - - Disabled - - "AGT1: AGTEE1; CEU: VIO_D9; ESWM_GMII/MII1: ET1_TX_EN; ESWM_RGMII1: RGMII1_TX_CTL; ESWM_RMII1: RMII1_TX_EN; GLCDC: LCD_DATA16; GPT7: GTCPPO7; IRQ: IRQ24-DS; SCI3: TXD3" "Reference SW4 /  E22 in manual" None - - 
       P311 B12 - - - - Disabled - - "AGT1: AGTOB1; CANFD0: CRX0; CEU: VIO_D8; ESWM_GMII/MII1: ET1_TX_CLK; GLCDC: LCD_DATA17; GPT: GTADSM1; GPT6: GTCPPO6; IRQ: IRQ23-DS; SCI3: DE3; SCI3: SCK3" - None - - 
-      P312 C13 - ARDUINO_D7 - - Disabled - - "AGT1: AGTOA1; CANFD0: CTX0; CEU: VIO_D7; ESWM_GMII/MII1: ET1_RX_ER; ESWM_RMII1: RMII1_RX_ER; GLCDC: LCD_DATA18; GPT: GTADSM0; GPT5: GTCPPO5; IRQ: IRQ22-DS; PDM2: PDMDAT2; SCI3: CTS_RTS3; SCI3: DE3" "Enable when connected" None - - 
+      P312 C13 - ARDUINO_D7 L - Disabled - - "AGT1: AGTOA1; CANFD0: CTX0; CEU: VIO_D7; ESWM_GMII/MII1: ET1_RX_ER; ESWM_RMII1: RMII1_RX_ER; GLCDC: LCD_DATA18; GPT: GTADSM0; GPT5: GTCPPO5; IRQ: IRQ22-DS; PDM2: PDMDAT2; SCI3: CTS_RTS3; SCI3: DE3" "Enable when connected" IO - - 
       P400 P17 - I3C_SCL - - Disabled - - "ADC1(Digital): ADTRG1; AGT1: AGTIO1; CEU: VIO_D0; GPT6: GTIOC6A; I3C0: I3C_SCL0; IRQ: IRQ0; SCI1: TXD1; SDHI1: SD1CLK; SSIE: AUDIO_CLK" - None - - 
       P401 N17 - I3C_SDA - - Disabled - - "CANFD0: CTX0; CEU: VIO_D1; GPT6: GTIOC6B; GPT_POEGA: GTETRGA; I3C0: I3C_SDA0; IRQ: IRQ5-DS; SCI1: RXD1; SDHI1: SD1CMD" - None - - 
       P402 L14 - PMOD1_RST - - Disabled - - "CAC: CACREF; CANFD0: CRX0; ESWM_GMII/MII: ET0_LINKSTA; ESWM_RGMII0: ET0_LINKSTA; ESWM_RMII0: ET0_LINKSTA; IRQ: IRQ4-DS; RTC: RTCIC0; SCI1: DE1; SCI1: SCK1; SDHI1: SD1DAT0; SSIE: AUDIO_CLK" "Enable when connected" None - - 
@@ -715,8 +715,8 @@ FSP Configuration
       P807 N11 - PARLCD_DE L None Disabled - - "GLCDC: LCD_TCON2; GPT13: GTIOC13A; IRQ: IRQ11" "See SW4 in manual" IO - - 
       P808 U5 - OSPI_CLK_ARDUINO_MISO L None Disabled - - "GPT13: GTIOC13B; IRQ: IRQ15; OSPI0: OM_0_SCLK; SCI7: RXD7" "See SW4 in manual" IO - - 
       P809 T5 - ARDUINO_D1TX_MIKROBUS_TX - - Disabled - - "IRQ: IRQ20; OSPI0: OM_0_SCLKN; SCI7: TXD7" "Enable when connected" None - - 
-      P810 M9 - ARDUINO_D4_MIKROBUS_PWM - - Disabled - - "GPT10: GTIOC10A; IRQ: IRQ21; PDM0: PDMCLK0; SCI7: DE7; SCI7: SCK7; SDHI1: SD1DAT2; ULPT0: ULPTOA0" "Enable when connected" None - - 
-      P811 N8 - ARDUINO_D3 - - Disabled - - "GPT10: GTIOC10B; IRQ: IRQ22; PDM1: PDMCLK1; SCI7: CTS7; SDHI1: SD1DAT3; ULPT0: ULPTOB0; USB FS: USB_ID" "Enable when connected" None - - 
+      P810 M9 - ARDUINO_D4_MIKROBUS_PWM L - Disabled - - "GPT10: GTIOC10A; IRQ: IRQ21; PDM0: PDMCLK0; SCI7: DE7; SCI7: SCK7; SDHI1: SD1DAT2; ULPT0: ULPTOA0" "Enable when connected" IO - - 
+      P811 N8 - ARDUINO_D3 L - Disabled - - "GPT10: GTIOC10B; IRQ: IRQ22; PDM1: PDMCLK1; SCI7: CTS7; SDHI1: SD1DAT3; ULPT0: ULPTOB0; USB FS: USB_ID" "Enable when connected" IO - - 
       P812 P8 - MIC_CLK - - Disabled - - "ADC0: AN022; ADC1: AN022; GPT11: GTIOC11A; IRQ: IRQ23; PDM2: PDMCLK2; SCI7: CTS_RTS7; SCI7: DE7; SDHI1: SD1DAT4; USB FS: USB_EXICEN" - None - - 
       P813 B1 - SDRAM_CS L None Disabled - - "CEU: VIO_D13; GPT7: GTIOC7B; GPT_POEGA: GTETRGA; IRQ: IRQ15; PDM2: PDMCLK2; SCI7: DE7; SCI7: SCK7; SDRAM: SDCS" "See E50 in manual" O - - 
       P814 U16 - USB_FS_DP - - Disabled - - "CANFD0: CRX0; GPT8: GTIOC8B; IRQ: IRQ16; USB FS: USB_DP" - None - - 
@@ -885,7 +885,7 @@ FSP Configuration
       P008 U11 IRQ_IRQ12-DS USER_SW2 - IRQ12-DS "IRQ mode" - - "ACMPHS: IVREF0; ADC1: AN008; IRQ: IRQ12-DS" - IO - - 
       P009 P11 IRQ_IRQ13-DS USER_SW1 - IRQ13-DS "IRQ mode" - - "ACMPHS: IVREF1; ADC1: AN009; IRQ: IRQ13-DS" - IO - - 
       P010 P10 IRQ_IRQ14 CAMERA_IRQ - IRQ14 "IRQ mode" - - "ADC1: AN010; IRQ: IRQ14" "Enable when connected" IO - - 
-      P011 N10 - ARDUINO_D2_INT0 - - Disabled - - "ADC1: AN011; IRQ: IRQ16" "Enable when connected" None - - 
+      P011 N10 GPIO ARDUINO_D2_INT0 L - "Output mode (Initial Low)" - - "ADC1: AN011; IRQ: IRQ16" "Enable when connected" IO - - 
       P012 P9 - PMOD2_INT - - Disabled - - "ADC0: AN012; IRQ: IRQ15" - None - - 
       P013 N9 - I3C_SCL_PU - - Disabled - - "ADC1: AN013; IRQ: IRQ14" "Enable I3C_SEL_L to use" None - - 
       P014 T8 - ARDUINO_AN4 - - Disabled - - "ACMPHS: IVCMP0; ADC0: AN014; DAC120: DA0; IRQ: IRQ27" "Enable when connected" None - - 
@@ -930,7 +930,7 @@ FSP Configuration
       P309 A12 - ETHERNET_TCLK - - Disabled - - "CEU: VIO_D10; CMPOUT: VCOUT; ESWM_GMII/MII1: ET1_GTX_CLK; ESWM_RGMII1: RGMII1_TXC; GLCDC: LCD_DATA15; GPT8: GTCPPO8; IRQ: IRQ25-DS; SCI9: CTS9" "Reference SW4 /  E23 in manual" None - - 
       P310 E10 - ETHERNET_TCTL - - Disabled - - "AGT1: AGTEE1; CEU: VIO_D9; ESWM_GMII/MII1: ET1_TX_EN; ESWM_RGMII1: RGMII1_TX_CTL; ESWM_RMII1: RMII1_TX_EN; GLCDC: LCD_DATA16; GPT7: GTCPPO7; IRQ: IRQ24-DS; SCI3: TXD3" "Reference SW4 /  E22 in manual" None - - 
       P311 B12 - - - - Disabled - - "AGT1: AGTOB1; CANFD0: CRX0; CEU: VIO_D8; ESWM_GMII/MII1: ET1_TX_CLK; GLCDC: LCD_DATA17; GPT: GTADSM1; GPT6: GTCPPO6; IRQ: IRQ23-DS; SCI3: DE3; SCI3: SCK3" - None - - 
-      P312 C13 - ARDUINO_D7 - - Disabled - - "AGT1: AGTOA1; CANFD0: CTX0; CEU: VIO_D7; ESWM_GMII/MII1: ET1_RX_ER; ESWM_RMII1: RMII1_RX_ER; GLCDC: LCD_DATA18; GPT: GTADSM0; GPT5: GTCPPO5; IRQ: IRQ22-DS; PDM2: PDMDAT2; SCI3: CTS_RTS3; SCI3: DE3" "Enable when connected" None - - 
+      P312 C13 GPIO ARDUINO_D7 L - "Output mode (Initial Low)" - - "AGT1: AGTOA1; CANFD0: CTX0; CEU: VIO_D7; ESWM_GMII/MII1: ET1_RX_ER; ESWM_RMII1: RMII1_RX_ER; GLCDC: LCD_DATA18; GPT: GTADSM0; GPT5: GTCPPO5; IRQ: IRQ22-DS; PDM2: PDMDAT2; SCI3: CTS_RTS3; SCI3: DE3" "Enable when connected" IO - - 
       P400 P17 - I3C_SCL - - Disabled - - "ADC1(Digital): ADTRG1; AGT1: AGTIO1; CEU: VIO_D0; GPT6: GTIOC6A; I3C0: I3C_SCL0; IRQ: IRQ0; SCI1: TXD1; SDHI1: SD1CLK; SSIE: AUDIO_CLK" - None - - 
       P401 N17 - I3C_SDA - - Disabled - - "CANFD0: CTX0; CEU: VIO_D1; GPT6: GTIOC6B; GPT_POEGA: GTETRGA; I3C0: I3C_SDA0; IRQ: IRQ5-DS; SCI1: RXD1; SDHI1: SD1CMD" - None - - 
       P402 L14 - PMOD1_RST - - Disabled - - "CAC: CACREF; CANFD0: CRX0; ESWM_GMII/MII: ET0_LINKSTA; ESWM_RGMII0: ET0_LINKSTA; ESWM_RMII0: ET0_LINKSTA; IRQ: IRQ4-DS; RTC: RTCIC0; SCI1: DE1; SCI1: SCK1; SDHI1: SD1DAT0; SSIE: AUDIO_CLK" "Enable when connected" None - - 
@@ -1005,8 +1005,8 @@ FSP Configuration
       P807 N11 GLCDC_LCD_TCON2 PARLCD_DE L None "Peripheral mode" - - "GLCDC: LCD_TCON2; GPT13: GTIOC13A; IRQ: IRQ11" "See SW4 in manual" IO - - 
       P808 U5 OSPI0_OM_0_SCLK OSPI_CLK_ARDUINO_MISO HH None "Peripheral mode" - - "GPT13: GTIOC13B; IRQ: IRQ15; OSPI0: OM_0_SCLK; SCI7: RXD7" "See SW4 in manual" IO - - 
       P809 T5 - ARDUINO_D1TX_MIKROBUS_TX - - Disabled - - "IRQ: IRQ20; OSPI0: OM_0_SCLKN; SCI7: TXD7" "Enable when connected" None - - 
-      P810 M9 - ARDUINO_D4_MIKROBUS_PWM - - Disabled - - "GPT10: GTIOC10A; IRQ: IRQ21; PDM0: PDMCLK0; SCI7: DE7; SCI7: SCK7; SDHI1: SD1DAT2; ULPT0: ULPTOA0" "Enable when connected" None - - 
-      P811 N8 - ARDUINO_D3 - - Disabled - - "GPT10: GTIOC10B; IRQ: IRQ22; PDM1: PDMCLK1; SCI7: CTS7; SDHI1: SD1DAT3; ULPT0: ULPTOB0; USB FS: USB_ID" "Enable when connected" None - - 
+      P810 M9 GPIO ARDUINO_D4_MIKROBUS_PWM L - "Output mode (Initial Low)" - - "GPT10: GTIOC10A; IRQ: IRQ21; PDM0: PDMCLK0; SCI7: DE7; SCI7: SCK7; SDHI1: SD1DAT2; ULPT0: ULPTOA0" "Enable when connected" IO - - 
+      P811 N8 GPIO ARDUINO_D3 L - "Output mode (Initial Low)" - - "GPT10: GTIOC10B; IRQ: IRQ22; PDM1: PDMCLK1; SCI7: CTS7; SDHI1: SD1DAT3; ULPT0: ULPTOB0; USB FS: USB_ID" "Enable when connected" IO - - 
       P812 P8 - MIC_CLK - - Disabled - - "ADC0: AN022; ADC1: AN022; GPT11: GTIOC11A; IRQ: IRQ23; PDM2: PDMCLK2; SCI7: CTS_RTS7; SCI7: DE7; SDHI1: SD1DAT4; USB FS: USB_EXICEN" - None - - 
       P813 B1 SDRAM_SDCS SDRAM_CS H None "Peripheral mode" - - "CEU: VIO_D13; GPT7: GTIOC7B; GPT_POEGA: GTETRGA; IRQ: IRQ15; PDM2: PDMCLK2; SCI7: DE7; SCI7: SCK7; SDRAM: SDCS" "See E50 in manual" O - - 
       P814 U16 - USB_FS_DP - - Disabled - - "CANFD0: CRX0; GPT8: GTIOC8B; IRQ: IRQ16; USB FS: USB_DP" - None - - 
@@ -1304,8 +1304,8 @@ FSP Configuration
       
     Instance "FreeRTOS Port (rm_freertos_port)"
     Instance "FreeRTOS Heap 4"
-    Instance "g_console_output_uart UART (r_sci_b_uart)"
-      General: Name: g_console_output_uart
+    Instance "g_printf_uart UART (r_sci_b_uart)"
+      General: Name: g_printf_uart
       General: Channel: 8
       General: Data Bits: 8bits
       General: Parity: None
@@ -1324,7 +1324,7 @@ FSP Configuration
       Extra: RS-485: DE Pin Polarity: Active High
       Extra: RS-485: DE Pin Assertion Time: 1
       Extra: RS-485: DE Pin Negation Time: 1
-      Interrupts: Callback: console_output_uart_callback
+      Interrupts: Callback: printf_uart_callback
       Interrupts: Receive Interrupt Priority: Priority 13
       Interrupts: Transmit Data Empty Interrupt Priority: Priority 13
       Interrupts: Transmit End Interrupt Priority: Priority 13
