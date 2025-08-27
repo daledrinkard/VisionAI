@@ -38,7 +38,7 @@ char CBX[128];
 /***************************************************************************************************************************
  * Macro definitions
  ***************************************************************************************************************************/
-#define DISPLAY_THREAD_YIELD    (20U)
+#define DISPLAY_THREAD_YIELD    (1U)  //@@(20U)
 
 #define SYSTEM_FLAG_DISPLAY     (0x00000001)
 #define SYSTEM_FLAG_PANEL_DIRTY (0x00000004)
@@ -273,7 +273,7 @@ POP0();
 
         // Post processing for camera image capture. After this process is completed, user app can take an image from camera_capture_image_rgb565[].
         camera_capture_post_process();
-POP1();
+DROP0();
         time_counter_end = TimeCounter_CurrentCountGet();
         application_processing_time.camera_post_processing_time_ms = TimeCounter_CountValueConvertToMs(time_counter_start, time_counter_end);
 #endif
@@ -282,7 +282,7 @@ POP1();
         // Create an image for AI inference
         image_rgb565_to_int8(&camera_capture_image_rgb565[0], &model_buffer_int8[0],
                              CAMERA_CAPTURE_IMAGE_WIDTH, CAMERA_CAPTURE_IMAGE_HEIGHT, AI_INPUT_IMAGE_WIDTH, AI_INPUT_IMAGE_HEIGHT);
-POP2();
+POP0();
 #if (BSP_CFG_DCACHE_ENABLED == 1)
         // Clean cache data because this buffer will be accessed by NPU hardware in subsequent process
         SCB_CleanDCache_by_Addr((uint8_t *)&model_buffer_int8[0], (int32_t)model_buffer_int8_size);
@@ -293,7 +293,7 @@ POP2();
 
         // Set AI inference input image ready flag. AI inference thread may waiting this flag set.
         xEventGroupSetBits(g_ai_app_event, AI_INFERENCE_INPUT_IMAGE_READY);
-DROP0();
+
         // Make a change for immediate task switch
         vTaskDelay(1);
 
@@ -305,12 +305,12 @@ DROP0();
         // Display camera image and AI inference result on display screen
         do_face_reconition_screen(ai_result_updated);
 #endif
-DROP1();
+DROP0();
         // Output the result to Terminal Software
         console_output(ai_result_updated);
 
         vTaskDelay(DISPLAY_THREAD_YIELD);
-        DROP2();
+
     }
 }
 static void compute_fps(void)

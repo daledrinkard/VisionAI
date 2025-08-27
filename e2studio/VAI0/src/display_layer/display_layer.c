@@ -15,6 +15,7 @@
 #include "time_counter.h"
 
 #include "display_layer_config.h"
+#include "POP/pop.h"
 
 static uint8_t drw_buf = 1;
 
@@ -173,6 +174,7 @@ void lcd_glcdc_callback(display_callback_args_t *p_args)
     BaseType_t xHigherPriorityTaskWoken, xResult;
     /* xHigherPriorityTaskWoken must be initialised to pdFALSE. */
     xHigherPriorityTaskWoken = pdFALSE;
+    if (drw_buf) POP2(); else DROP2();
     if (DISPLAY_EVENT_LINE_DETECTION & p_args->event )
     {
         application_processing_time.lcd_display_update_refresh_ms = TimeCounter_CountValueConvertToMs(last_lcd_glcdc_frame_end, TimeCounter_CurrentCountGet());
@@ -209,9 +211,11 @@ void lcd_glcdc_callback(display_callback_args_t *p_args)
 void graphics_swap_buffer()
 {
     drw_buf = (drw_buf == 0) ? 1 : 0;
-
+    if (drw_buf) POP3(); else DROP3();
     /* Update the layer to display in the GLCDC (will be set on next Vsync) */
     R_GLCDC_BufferChange(g_lcd_glcdc.p_ctrl, fb_background[drw_buf], DISPLAY_FRAME_LAYER_1);
+    //@@drw_buf = (drw_buf == 0) ? 1 : 0; //@@
+    //@@if (drw_buf) POP3(); else DROP3(); //@@
 }
 
 /*********************************************************************************************************************
